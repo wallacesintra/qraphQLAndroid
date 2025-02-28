@@ -1,0 +1,202 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+enum Gender {
+    MALE
+    FEMALE
+}
+
+enum Curriculum {
+    LITERACY
+    NUMERACY
+}
+
+enum AccountType {
+    ORGANIZATION
+}
+
+enum Role {
+    INSTRUCTOR
+}
+
+type User {
+    id: ID!
+    email: String!
+    role: Role!
+    firstName: String!
+    lastName: String!
+    phone: String!
+    gender: Gender!
+    trained: Boolean!
+    organizationId: ID!
+    organization: Organization
+}
+
+type Organization {
+    id: ID!
+    name: String!
+    countryId: ID!
+    createdAt: String!
+    accountType: AccountType!
+    stripeCustomerId: String
+    country: Country
+    schools: [School]
+    camps: [Camp]
+}
+
+type Country {
+    id: ID!
+    name: String!
+    code: String!
+    counties: [County]
+}
+
+type County {
+    id: ID!
+    name: String!
+    latitude: String!
+    longitude: String!
+    countryId: ID!
+    country: Country
+    schools: [School]
+}
+
+type School {
+    id: ID!
+    countyId: ID!
+    name: String!
+    createdAt: String!
+    organizationId: ID!
+    county: County
+    organization: Organization
+    camps: [Camp]
+}
+
+type Camp {
+    id: ID!
+    name: String!
+    startDate: String!
+    endDate: String!
+    createdAt: String!
+    curriculum: Curriculum!
+    organizationId: ID!
+    schoolId: ID!
+    organization: Organization
+    school: School
+    students: [Student]
+    campGroups: [CampGroup]
+}
+
+type Student {
+    id: ID!
+    firstName: String!
+    middleName: String
+    lastName: String!
+    age: Int!
+    grade: Int!
+    gender: Gender!
+    createdAt: String!
+    availableForLearningCamp: Boolean!
+    campId: ID!
+    camp: Camp
+    campGroup: CampGroup
+}
+
+type CampGroup {
+    id: ID!
+    name: String!
+    createdAt: String!
+    campId: ID!
+    students: [Student]
+    camp: Camp
+}
+
+type AuthPayload {
+    token: String!
+    user: User!
+}
+
+type Query {
+    users: [User]
+    user(id: ID!): User
+    organizations: [Organization]
+    organization(id: ID!): Organization
+    countries: [Country]
+    country(id: ID!): Country
+    counties: [County]
+    county(id: ID!): County
+    schools: [School]
+    school(id: ID!): School
+    schoolsByOrganization(organizationId: ID!): [School]
+    camps: [Camp]
+    camp(id: ID!): Camp
+    campsBySchool(schoolId: ID!): [Camp]
+    campsByOrganization(organizationId: ID!): [Camp]
+    students: [Student]
+    student(id: ID!): Student
+    studentsByCamp(campId: ID!): [Student]
+    campGroups: [CampGroup]
+    campGroup(id: ID!): CampGroup
+    campGroupsByCamp(campId: ID!): [CampGroup]
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input CreateSchoolInput {
+    countyId: ID!
+    name: String!
+    organizationId: ID!
+}
+
+input CreateCampInput {
+    name: String!
+    startDate: String!
+    endDate: String!
+    curriculum: Curriculum!
+    organizationId: ID!
+    schoolId: ID!
+}
+
+input CreateStudentInput {
+    firstName: String!
+    middleName: String
+    lastName: String!
+    age: Int!
+    grade: Int!
+    gender: Gender!
+    availableForLearningCamp: Boolean!
+    campId: ID!
+}
+
+input UpdateStudentInput {
+    firstName: String
+    middleName: String
+    lastName: String
+    age: Int
+    grade: Int
+    gender: Gender
+    availableForLearningCamp: Boolean
+    campId: ID
+}
+
+input CreateCampGroupInput {
+    name: String!
+    campId: ID!
+    students: [ID!]
+}
+
+type Mutation {
+    login(input: LoginInput!): AuthPayload
+    createSchool(input: CreateSchoolInput!): School
+    createCamp(input: CreateCampInput!): Camp
+    addStudentsToCamp(campId: ID!, studentIds: [ID!]!): Camp
+    createStudent(input: CreateStudentInput!): Student
+    updateStudent(id: ID!, input: UpdateStudentInput!): Student
+    deleteStudent(id: ID!): Boolean
+    createCampGroup(input: CreateCampGroupInput!): CampGroup
+}
