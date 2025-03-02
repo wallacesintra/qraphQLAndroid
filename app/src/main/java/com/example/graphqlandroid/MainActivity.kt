@@ -11,20 +11,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.graphqlandroid.domain.viewmodels.authentication.LoginViewModel
 import com.example.graphqlandroid.ui.theme.GraphQLAndroidTheme
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GraphQLAndroidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+            KoinContext {
+                GraphQLAndroidTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        val loginViewModel = koinViewModel<LoginViewModel>()
+
+                        Greeting(
+                            name = "Android",
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
+
             }
         }
     }
