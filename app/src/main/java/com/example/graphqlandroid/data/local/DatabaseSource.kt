@@ -1,12 +1,12 @@
 package com.example.graphqlandroid.data.local
 
-import com.example.graphqlandroid.domain.models.User
+import com.example.graphqlandroid.domain.models.AppUser
 import kotlinx.coroutines.flow.Flow
 
 interface DatabaseSource {
-    suspend fun insertUser(user: User)
+    suspend fun insertUser(appUser: AppUser)
 
-    suspend fun getLoggedInUser(): Flow<User?>
+    suspend fun getLoggedInUser(): Flow<AppUser?>
 
 
 }

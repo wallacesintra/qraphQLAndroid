@@ -1,8 +1,8 @@
 package com.example.graphqlandroid.domain.dto.authentication
 
-import com.example.graphqlandroid.domain.models.User
+import com.example.graphqlandroid.domain.models.AppUser
 
 data class LoginResponseDTO(
     val token: String,
-    val user: User
+    val appUser: AppUser
 )

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.graphqlandroid.data.local.DatabaseSource
 import com.example.graphqlandroid.data.remote.RemoteRepository
 import com.example.graphqlandroid.domain.actions.LoginAction
-import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 import com.example.graphqlandroid.domain.dto.authentication.LoginResponseDTO
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.models.Results
@@ -17,7 +16,6 @@ import com.example.graphqlandroid.domain.states.LoginFormState
 import com.example.graphqlandroid.domain.states.LoginFormState.Companion.toLogInInputRequestDTO
 import com.example.graphqlandroid.presentation.common.SnackBarHandler
 import com.example.graphqlandroid.utils.Utils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.catch
@@ -97,7 +95,7 @@ class LoginViewModel(
                     )
 
                     response.data?.let { data ->
-                        databaseSource.insertUser(user = data.user)
+                        databaseSource.insertUser(appUser = data.appUser)
                     }
 
                 }

@@ -8,15 +8,15 @@ import androidx.compose.runtime.getValue
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.authentication.FirstPageViewModel
 import com.example.graphqlandroid.presentation.authentication.LoginScreen
+import com.example.graphqlandroid.presentation.common.AppCircularLoading
 import com.example.graphqlandroid.presentation.home.HomeScreen
-import com.example.graphqlandroid.presentation.navigation.FirstPage
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FirstScreen(){
 
     val firstPageViewModel = koinViewModel<FirstPageViewModel>()
-    val userState by firstPageViewModel.userStateFlow.collectAsState()
+    val userState by firstPageViewModel.appUserStateFlow.collectAsState()
 
     AnimatedContent(
         targetState = userState.status
@@ -24,7 +24,7 @@ fun FirstScreen(){
         when (targetState){
             ResultStatus.INITIAL,
             ResultStatus.LOADING -> {
-                CircularProgressIndicator()
+                AppCircularLoading()
             }
             ResultStatus.SUCCESS -> {
                 userState.data?.let {

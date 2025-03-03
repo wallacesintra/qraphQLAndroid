@@ -81,6 +81,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .padding(horizontal = 12.dp)
         ) {
             item {
                 Image(
