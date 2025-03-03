@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.authentication.FirstPageViewModel
 import com.example.graphqlandroid.presentation.authentication.LoginScreen
+import com.example.graphqlandroid.presentation.home.HomeScreen
 import com.example.graphqlandroid.presentation.navigation.FirstPage
 import org.koin.androidx.compose.koinViewModel
 
@@ -27,7 +28,7 @@ fun FirstScreen(){
             }
             ResultStatus.SUCCESS -> {
                 userState.data?.let {
-
+                    HomeScreen()
                 }?: LoginScreen()
 
             }

@@ -10,6 +10,7 @@ import com.example.graphqlandroid.data.remote.RemoteRepository
 import com.example.graphqlandroid.data.remote.RemoteRepositoryImpl
 import com.example.graphqlandroid.domain.viewmodels.authentication.LoginViewModel
 import com.example.graphqlandroid.domain.viewmodels.authentication.FirstPageViewModel
+import com.example.graphqlandroid.domain.viewmodels.HomeViewModel
 import com.example.graphqlandroid.presentation.common.SnackBarHandler
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -48,5 +49,7 @@ val appModules = module {
     viewModelOf(::LoginViewModel)
 
     viewModelOf(::FirstPageViewModel)
+
+    viewModelOf(::HomeViewModel)
 
 }
