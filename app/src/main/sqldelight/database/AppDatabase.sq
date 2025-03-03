@@ -1,0 +1,31 @@
+import kotlin.Boolean;
+
+
+CREATE TABLE LogInUserEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    gender TEXT NOT NULL,
+    trained INTEGER AS Boolean NOT NULL DEFAULT 0,
+    organizationId TEXT NOT NULL
+);
+
+insertUser:
+INSERT OR REPLACE INTO LogInUserEntity(id, firstName, lastName, email, phone, gender, trained, organizationId) VALUES (?, ?, ?, ?,?, ?, ?, ?);
+
+selectLoggedInUser:
+SELECT
+    id,
+    firstName,
+    lastName,
+    email,
+    phone,
+    gender,
+    trained,
+    organizationId
+FROM LogInUserEntity LIMIT 1;
+
+deleteLoggedInUser:
+DELETE FROM LogInUserEntity;

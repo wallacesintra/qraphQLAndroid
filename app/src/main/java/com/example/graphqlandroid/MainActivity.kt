@@ -11,10 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.graphqlandroid.domain.viewmodels.authentication.LoginViewModel
+import com.example.graphqlandroid.presentation.FirstScreen
+import com.example.graphqlandroid.presentation.navigation.Navigation
 import com.example.graphqlandroid.ui.theme.GraphQLAndroidTheme
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
+
+lateinit var navController: NavHostController
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,14 +31,14 @@ class MainActivity : ComponentActivity() {
 
             KoinContext {
                 GraphQLAndroidTheme {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        val loginViewModel = koinViewModel<LoginViewModel>()
+                    navController = rememberNavController()
+                    val loginViewModel = koinViewModel<LoginViewModel>()
 
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                    }
+
+                    Navigation(
+                        navController = navController
+                    )
+
                 }
 
             }
