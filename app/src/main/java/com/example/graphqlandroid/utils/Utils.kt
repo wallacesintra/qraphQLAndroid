@@ -1,8 +1,14 @@
 package com.example.graphqlandroid.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object Utils {
     private val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
@@ -25,6 +31,14 @@ object Utils {
                 label = "animated int string",
             ).value.toString()
         } ?: number
+    }
+
+
+    fun formatDate(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date)
     }
 
 }

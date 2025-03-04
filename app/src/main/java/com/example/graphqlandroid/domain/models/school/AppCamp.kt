@@ -18,6 +18,5 @@ data class AppCamp(
     val curriculum: String,
     @SerialName("students")
     val students: List<Student> = emptyList(),
-
     val schoolId: String,
 )

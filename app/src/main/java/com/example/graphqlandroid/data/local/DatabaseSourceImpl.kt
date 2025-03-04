@@ -99,7 +99,8 @@ class DatabaseSourceImpl(
                     name = detailedSchool.county.name,
                     latitude = detailedSchool.county.latitude,
                     longitude = detailedSchool.county.longitude,
-                    countryId = detailedSchool.county.country?.id ?: ""
+                    countryId = detailedSchool.county.country?.id ?: "",
+                    country = detailedSchool.county.country?.name ?: ""
                 )
 
             }
