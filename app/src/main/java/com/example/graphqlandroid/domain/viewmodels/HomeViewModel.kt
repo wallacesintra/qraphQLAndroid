@@ -20,7 +20,7 @@ class HomeViewModel(
 ): ViewModel() {
 
     init {
-        fetchUser()
+        getUser()
     }
 
     var currentScreen by mutableStateOf(AppScreen.Home)
@@ -31,9 +31,8 @@ class HomeViewModel(
 
     val appUserStateFlow = MutableStateFlow(Results.initial<AppUser?>())
 
-    private fun fetchUser(){
+    private fun getUser(){
         viewModelScope.launch {
-//            appUserStateFlow.value = Results.loading()
             databaseSource.getLoggedInUser()
                 .catch { appUserStateFlow.value = Results.error() }
                 .collect{ user -> appUserStateFlow.value = Results.success(data = user) }

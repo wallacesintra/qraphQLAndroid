@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
@@ -30,7 +33,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             Text(
-                currentScreen.title,
+                "",
+//                currentScreen.title,
                 style = MaterialTheme.typography.titleMedium
             )
         },
@@ -58,6 +62,20 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         alwaysShowLabel = true,
                     )
                 }
+            }
+        },
+        floatingActionButton = {
+            when(currentScreen){
+                AppScreen.Home -> {}
+                else ->
+                    FloatingActionButton(
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "add ${currentScreen.title}"
+                        )
+                    }
             }
         },
         modifier = modifier

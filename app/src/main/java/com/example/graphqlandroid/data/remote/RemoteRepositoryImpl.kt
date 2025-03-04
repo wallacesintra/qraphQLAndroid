@@ -2,16 +2,21 @@ package com.example.graphqlandroid.data.remote
 
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
+import com.example.GetCountsQuery
 import com.example.GetUserQuery
 import com.example.LoginMutation
 import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 import com.example.graphqlandroid.domain.dto.authentication.LoginResponseDTO
+import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.Results
 import com.example.graphqlandroid.domain.models.AppUser
+import com.example.graphqlandroid.domain.models.CountAggregrate
 import com.example.type.LoginInput
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class RemoteRepositoryImpl(
     private val apolloClient: ApolloClient
@@ -44,7 +49,7 @@ class RemoteRepositoryImpl(
 
             }
 
-        }
+        }.flowOn(Dispatchers.Main)
     }
 
     override suspend fun fetchUser(userId: String): Flow<Results<AppUser>> {
@@ -64,6 +69,25 @@ class RemoteRepositoryImpl(
             }catch (e:Exception){
                 emit(Results.error(msg = e.message ?: "Something went wrong"))
             }
-        }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchCountAggregrate(): Flow<Results<CountAggregrate>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .query(query = GetCountsQuery())
+                    .execute()
+                    .data
+
+                if (response != null){
+                    emit(Results.success(data = response.toCountAggregrate()))
+                }else {
+                    emit(Results.success(data = null))
+                }
+            }catch (e:Exception){
+                emit(Results.error(msg = e.message ?: "Something went wrong"))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 }

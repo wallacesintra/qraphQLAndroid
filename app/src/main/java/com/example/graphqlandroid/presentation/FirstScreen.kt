@@ -31,6 +31,8 @@ fun FirstScreen(){
                     HomeScreen()
                 }?: LoginScreen()
 
+//                HomeScreen()
+
             }
             ResultStatus.ERROR -> {}
         }

@@ -3,8 +3,10 @@ package com.example.graphqlandroid.data.local
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.graphqlandroid.AppDatabase
+import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.AppUser
+import com.example.graphqlandroid.domain.models.CountAggregrate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -35,5 +37,26 @@ class DatabaseSourceImpl(
             .map { it?.toUser() }
             .flowOn(Dispatchers.Main)
 
+    }
+
+    override suspend fun insertCount(countAggregrate: CountAggregrate) {
+        queries.transaction {
+
+            queries.deleteCountAggregrate()
+
+            queries.insertCountAggregrate(
+                studentsCount = countAggregrate.studentsCount.toLong(),
+                campsCount = countAggregrate.campsCount.toLong(),
+                schoolsCount = countAggregrate.schoolsCount.toLong()
+            )
+        }
+    }
+
+    override suspend fun getCountAggregrate(): Flow<CountAggregrate> {
+        return queries.selectCountAggregrate()
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
+            .map { it?.toCountAggregrate() ?: CountAggregrate() }
+            .flowOn(Dispatchers.Main)
     }
 }

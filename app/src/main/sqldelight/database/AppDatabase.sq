@@ -29,3 +29,19 @@ FROM LogInUserEntity LIMIT 1;
 
 deleteLoggedInUser:
 DELETE FROM LogInUserEntity;
+
+
+CREATE TABLE CountAggregrateEntity(
+    studentsCount INTEGER NOT NULL,
+    campsCount INTEGER NOT NULL,
+    schoolsCount INTEGER NOT NULL
+);
+
+insertCountAggregrate:
+INSERT INTO CountAggregrateEntity(studentsCount, campsCount, schoolsCount) VALUES (?,?,?);
+
+deleteCountAggregrate:
+DELETE FROM CountAggregrateEntity;
+
+selectCountAggregrate:
+SELECT * FROM CountAggregrateEntity LIMIT 1;
