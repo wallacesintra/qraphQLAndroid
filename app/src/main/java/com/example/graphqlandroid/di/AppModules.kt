@@ -12,6 +12,8 @@ import com.example.graphqlandroid.domain.viewmodels.authentication.LoginViewMode
 import com.example.graphqlandroid.domain.viewmodels.authentication.FirstPageViewModel
 import com.example.graphqlandroid.domain.viewmodels.HomeViewModel
 import com.example.graphqlandroid.domain.viewmodels.dashboard.DashboardViewModel
+import com.example.graphqlandroid.domain.viewmodels.schools.SchoolViewModel
+import com.example.graphqlandroid.domain.viewmodels.schools.IndividualSchoolViewModel
 import com.example.graphqlandroid.presentation.common.SnackBarHandler
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -54,5 +56,9 @@ val appModules = module {
     viewModelOf(::HomeViewModel)
 
     viewModelOf(::DashboardViewModel)
+
+    viewModelOf(::SchoolViewModel)
+
+    viewModelOf(::IndividualSchoolViewModel)
 
 }

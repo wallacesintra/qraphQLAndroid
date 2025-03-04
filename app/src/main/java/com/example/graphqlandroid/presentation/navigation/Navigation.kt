@@ -5,8 +5,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
+import androidx.navigation.toRoute
 import com.example.graphqlandroid.presentation.FirstScreen
 import com.example.graphqlandroid.presentation.home.HomeScreen
+import com.example.graphqlandroid.presentation.school.SchoolScreen
 
 @Composable
 fun Navigation(navController: NavHostController){
@@ -20,6 +22,12 @@ fun Navigation(navController: NavHostController){
 
         composable<HomePage> {
             HomeScreen()
+        }
+
+        composable<SchoolPage> { backStackEntry ->
+            val args = backStackEntry.toRoute<SchoolPage>()
+
+            SchoolScreen(schoolId = args.id)
         }
     }
 }

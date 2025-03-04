@@ -3,15 +3,21 @@ package com.example.graphqlandroid.data.remote
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.example.GetCountsQuery
+import com.example.GetDetailedSchoolInfoQuery
+import com.example.GetSchoolsQuery
 import com.example.GetUserQuery
 import com.example.LoginMutation
 import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 import com.example.graphqlandroid.domain.dto.authentication.LoginResponseDTO
 import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
+import com.example.graphqlandroid.domain.mapper.school.toDetailedSchool
+import com.example.graphqlandroid.domain.mapper.school.toSchool
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.Results
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.school.AppSchool
+import com.example.graphqlandroid.domain.models.school.DetailedSchool
 import com.example.type.LoginInput
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -87,6 +93,46 @@ class RemoteRepositoryImpl(
                 }
             }catch (e:Exception){
                 emit(Results.error(msg = e.message ?: "Something went wrong"))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchSchools(): Flow<Results<List<AppSchool?>>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .query(query = GetSchoolsQuery())
+                    .execute()
+                    .data
+
+                if (response?.schools != null){
+                    emit(Results.success(data = response.schools.map { it?.toSchool() }))
+                }else {
+                    emit(Results.success(data = emptyList()))
+                }
+
+            }catch (e: Exception){
+                emit(Results.error(msg = e.message ?: "Error fetching schools"))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchDetailedSchoolInfo(schoolId: String): Flow<Results<DetailedSchool>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .query(query = GetDetailedSchoolInfoQuery(schoolId= schoolId))
+                    .execute()
+                    .data
+
+                if (response?.school != null){
+                    emit(Results.success(data = response.school.toDetailedSchool()))
+                }else{
+                    emit(Results.success(data = null))
+                }
+
+            }catch (e: Exception){
+                emit(Results.error())
             }
         }.flowOn(Dispatchers.IO)
     }

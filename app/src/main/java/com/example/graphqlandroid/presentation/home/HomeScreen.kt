@@ -19,6 +19,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.HomeViewModel
 import com.example.graphqlandroid.presentation.common.AppCircularLoading
@@ -33,9 +35,13 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             Text(
-                "",
-//                currentScreen.title,
-                style = MaterialTheme.typography.titleMedium
+                currentScreen.topBarTitle,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .padding(12.dp)
             )
         },
         bottomBar = {
@@ -49,14 +55,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         icon = {
                             Icon(
                                 painter = painterResource(screen.icon),
-                                contentDescription = screen.title
+                                contentDescription = screen.bottomBarTitle
                             )
                         },
                         modifier = Modifier,
                         enabled = true,
                         label = {
                             Text(
-                                text = screen.title
+                                text = screen.bottomBarTitle
                             )
                         },
                         alwaysShowLabel = true,
@@ -73,7 +79,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = "add ${currentScreen.title}"
+                            contentDescription = "add ${currentScreen.bottomBarTitle}"
                         )
                     }
             }
