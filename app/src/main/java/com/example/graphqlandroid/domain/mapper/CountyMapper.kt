@@ -10,6 +10,9 @@ fun CountyEntity.toAppCounty(): AppCounty {
         name = name,
         latitude = latitude,
         longitude = longitude,
-        country = null
+        country = AppCountry(
+            id = "",
+            name = country ?: ""
+        )
     )
 }

@@ -42,3 +42,23 @@ query GetDetailedSchoolInfo($schoolId: ID!) {
         }
     }
 }
+
+mutation CreateSchool($input: CreateSchoolInput!) {
+    createSchool(input: $input) {
+        id
+        countyId
+        name
+        createdAt
+        organizationId
+        county {
+            id
+            name
+            latitude
+            longitude
+        }
+        camps {
+            id
+            name
+        }
+    }
+}

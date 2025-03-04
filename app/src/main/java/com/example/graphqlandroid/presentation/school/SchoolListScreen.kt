@@ -62,7 +62,7 @@ fun SchoolListScreen(modifier: Modifier = Modifier) {
                             verticalItemSpacing = 8.dp,
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier
-                                .padding(horizontal = 12.dp)
+                                .padding(horizontal = 8.dp)
                         ) {
                             items(schools, key = { it.id }) { school ->
                                 SchoolListItem(

@@ -20,4 +20,5 @@ sealed interface RemoteRepository {
 
     suspend fun fetchDetailedSchoolInfo(schoolId: String): Flow<Results<DetailedSchool>>
 
+    suspend fun createSchool(){}
 }
