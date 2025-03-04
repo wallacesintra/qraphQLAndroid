@@ -1,6 +1,6 @@
 package com.example.graphqlandroid.domain.models
 
-data class User(
+data class AppUser(
     val id: String,
     val firstName: String,
     val lastName: String,
