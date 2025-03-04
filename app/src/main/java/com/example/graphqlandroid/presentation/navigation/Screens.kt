@@ -7,3 +7,6 @@ object FirstPage
 
 @Serializable
 object HomePage
+
+@Serializable
+data class SchoolPage(val id: String)

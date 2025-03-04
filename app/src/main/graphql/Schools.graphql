@@ -1,0 +1,44 @@
+query GetSchools {
+    schools {
+        id
+        name
+        county {
+            name
+            country {
+                name
+            }
+        }
+    }
+}
+
+query GetDetailedSchoolInfo($schoolId: ID!) {
+    school(id: $schoolId) {
+        id
+        countyId
+        name
+        organizationId
+        county {
+            id
+            name
+            latitude
+            longitude
+            country {
+                id
+                name
+            }
+        }
+        camps {
+            id
+            name
+            startDate
+            endDate
+            curriculum
+            students {
+                id
+                firstName
+                middleName
+            }
+            schoolId
+        }
+    }
+}

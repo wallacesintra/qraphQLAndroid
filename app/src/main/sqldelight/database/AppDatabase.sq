@@ -45,3 +45,92 @@ DELETE FROM CountAggregrateEntity;
 
 selectCountAggregrate:
 SELECT * FROM CountAggregrateEntity LIMIT 1;
+
+CREATE TABLE SchoolEntity(
+    id TEXT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    countyName TEXT NOT NULL,
+    countryName TEXT NOT NULL
+);
+
+insertSchool:
+INSERT OR REPLACE INTO SchoolEntity(id, name, countyName, countryName) VALUES (?,?,?,?);
+
+deleteSchools:
+DELETE FROM SchoolEntity;
+
+selectAllSchool:
+SELECT * FROM SchoolEntity ORDER BY id;
+
+CREATE TABLE DetailedSchoolEntity(
+    id TEXT PRIMARY KEY,
+    countyId TEXT NOT NULL,
+    name TEXT NOT NULL,
+    organizationId TEXT NOT NULL
+);
+
+insertDetailedSchool:
+INSERT OR REPLACE INTO DetailedSchoolEntity(id, countyId, name, organizationId) VALUES (?,?,?,?);
+
+selectDetailedSchoolById:
+SELECT school.* FROM DetailedSchoolEntity school WHERE school.id = ?;
+
+
+deleteDetailedSchool:
+DELETE FROM DetailedSchoolEntity;
+
+CREATE TABLE CountyEntity(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    latitude TEXT NOT NULL,
+    longitude TEXT NOT NULL,
+    countryId TEXT NOT NULL
+);
+
+insertCounty:
+INSERT OR REPLACE INTO CountyEntity(id, name, latitude, longitude, countryId) VALUES (?,?,?,?,?);
+
+deleteCouty:
+DELETE FROM CountyEntity;
+
+selectCountyById:
+SELECT county.* FROM CountyEntity  county WHERE county.id = ? LIMIT 1;
+
+CREATE TABLE CountryEntity(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+insertCountry:
+INSERT OR REPLACE INTO CountryEntity(id, name) VALUES (?,?);
+
+
+CREATE TABLE CampEntity(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    startDate TEXT NOT NULL,
+    endDate TEXT NOT NULL,
+    schoolId TEXT NOT NULL,
+    curriculum TEXT NOT NULL
+);
+
+insertCamp:
+INSERT OR REPLACE INTO CampEntity(id, name, startDate, endDate, curriculum, schoolId)
+VALUES (?,?,?,?,?,?);
+
+CREATE TABLE StudentEntity(
+    id TEXT PRIMARY KEY,
+    firstName TEXT NOT NULL,
+    middleName TEXT NOT NULL
+);
+
+deleteCamp:
+DELETE FROM CampEntity;
+
+selectCampBySchoolId:
+SELECT * FROM CampEntity camp WHERE camp.schoolId = ? ORDER BY camp.id;
+
+insertStudent:
+INSERT OR REPLACE INTO StudentEntity(id, firstName, middleName)
+VALUES (?, ?,?);
+
