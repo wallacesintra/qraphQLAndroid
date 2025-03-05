@@ -9,11 +9,12 @@ import com.example.graphqlandroid.domain.mapper.school.toSchool
 import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
-import com.example.graphqlandroid.domain.mapper.toCampEntity
+import com.example.graphqlandroid.domain.mapper.toDetailedCampInfo
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.camps.DetailedCampInfo
 import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
@@ -223,6 +224,31 @@ class DatabaseSourceImpl(
             .mapToList(Dispatchers.IO)
             .mapNotNull { it.map { campEntity -> campEntity.toAppCamp() } }
             .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun getDetailedCampById(campId: String): Flow<DetailedCampInfo?> {
+        return queries.selectDetailedCampById(campId)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
+            .map { it?.toDetailedCampInfo() }
+            .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun insertDetailedCampInfo(detailedCamp: DetailedCampInfo) {
+        queries.insertDetailedCamp(
+            id = detailedCamp.id,
+            name = detailedCamp.name,
+            startDate = detailedCamp.startDate,
+            endDate = detailedCamp.endDate,
+            curriculum = detailedCamp.curriculum,
+            schoolId = detailedCamp.schoolId,
+            organizationId = detailedCamp.organizationId,
+            campGroupsSize = detailedCamp.campGroupsSize.toLong(),
+            createdAt = detailedCamp.createdAt,
+            organizationName = detailedCamp.organization?.name ?: "",
+            schoolName = detailedCamp.school?.name ?: "",
+            studentsSize = detailedCamp.campGroupsSize.toLong()
+        )
     }
 
     override suspend fun getCounties(): Flow<List<AppCounty>> {

@@ -2,6 +2,7 @@ package com.example.graphqlandroid.domain.mapper.school
 
 import com.example.GetDetailedSchoolInfoQuery
 import com.example.GetSchoolsQuery
+import com.example.graphqlandroid.domain.mapper.toAppCurriculum
 import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCountry
 import com.example.graphqlandroid.domain.models.school.AppSchool
@@ -56,7 +57,7 @@ fun GetDetailedSchoolInfoQuery.School.toDetailedSchool(): DetailedSchool {
                         name = camp.name,
                         startDate = camp.startDate,
                         endDate = camp.endDate,
-                        curriculum = camp.curriculum.name,
+                        curriculum = camp.curriculum.toAppCurriculum().text,
                         students = emptyList(),
                         schoolId = camp.schoolId
                     )

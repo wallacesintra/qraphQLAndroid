@@ -39,3 +39,16 @@ query FetchDetailedCampInfo($campId: ID!) {
         }
     }
 }
+
+
+query FetchCamp {
+    camps {
+        id
+        name
+        startDate
+        endDate
+        curriculum
+        createdAt
+        schoolId
+    }
+}
