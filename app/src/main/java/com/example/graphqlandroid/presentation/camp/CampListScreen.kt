@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.camp.CampViewModel
+import com.example.graphqlandroid.navController
 import com.example.graphqlandroid.presentation.common.AppCircularLoading
+import com.example.graphqlandroid.presentation.navigation.CampPage
 import com.example.graphqlandroid.presentation.school.CampItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -49,7 +51,12 @@ fun CampListScreen(
                             .padding(horizontal = 8.dp)
                     ) {
                         items(camps, {it.id}){ camp ->
-                            CampItem(camp = camp )
+                            CampItem(
+                                camp = camp,
+                                onClick = {
+                                    navController.navigate(CampPage(id = camp.id))
+                                }
+                            )
                         }
                     }
                 }

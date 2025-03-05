@@ -70,7 +70,7 @@ fun FetchDetailedCampInfoQuery.Data.toDetailedCampInfo(): DetailedCampInfo {
         organization = camp?.organization?.let {
             OrganizationLittleInfo(
                 id = camp.organizationId,
-                name = camp.name
+                name = camp.organization.name
             )
         },
         organizationId = camp?.organizationId ?: "",
