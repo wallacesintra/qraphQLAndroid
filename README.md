@@ -10,7 +10,7 @@ This project is an Android application built using Kotlin and Jetpack Compose. I
     ```
 2. Open the project in Android Studio.
 3. Sync the project with Gradle files.
-4. Run the project on an emulator or a physical device.
+4. Run the project on an emulator.
 
 ## Features Implemented
 
