@@ -4,6 +4,7 @@ import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.example.CreateCampMutation
 import com.example.CreateSchoolMutation
+import com.example.FetchCampQuery
 import com.example.FetchOrganizationsQuery
 import com.example.GetCountiesQuery
 import com.example.GetCountsQuery
@@ -26,11 +27,14 @@ import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
 import com.example.graphqlandroid.domain.mapper.toCreateCamp
 import com.example.graphqlandroid.domain.mapper.toCurriculum
+import com.example.graphqlandroid.domain.mapper.toDetailedCampInfo
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.Results
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.camps.DetailedCampInfo
+import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
@@ -250,5 +254,47 @@ class RemoteRepositoryImpl(
                 emit(Results.error(msg = e.message ?: "Error creating camp"))
             }
         }
+    }
+
+    override suspend fun fetchCamps(): Flow<Results<List<AppCamp?>>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .query(query = FetchCampQuery())
+                    .execute()
+
+                if (response.data != null){
+                    emit(Results.success(data = response.data?.camps?.map { it?.toAppCamp() }))
+                }else{
+                    emit(Results.error(msg = response.errors?.first()?.message ?: "Error fetching camps"))
+                }
+            }catch (e: Exception){
+                emit(Results.error(msg = e.message ?: "Error fetching camps"))
+            }
+
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchDetailedCampInfo(campId: String): Flow<Results<DetailedCampInfo>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .query(
+                        com.example.FetchDetailedCampInfoQuery(
+                            campId = campId
+                        )
+                    )
+                    .execute()
+
+                if (response.data != null){
+                    emit(Results.success(data = response.data?.toDetailedCampInfo()))
+                }else{
+                    emit(Results.error(msg = response.errors?.first()?.message ?: "Error fetching camp"))
+                }
+
+            }catch (e: Exception){
+                emit(Results.error(msg = e.message ?: "Error fetching camp"))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 }

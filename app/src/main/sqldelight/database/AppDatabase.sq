@@ -122,11 +122,6 @@ insertCamp:
 INSERT OR REPLACE INTO CampEntity(id, name, startDate, endDate, curriculum, schoolId)
 VALUES (?,?,?,?,?,?);
 
-CREATE TABLE StudentEntity(
-    id TEXT PRIMARY KEY,
-    firstName TEXT NOT NULL,
-    middleName TEXT NOT NULL
-);
 
 deleteCamp:
 DELETE FROM CampEntity;
@@ -134,8 +129,39 @@ DELETE FROM CampEntity;
 selectCampBySchoolId:
 SELECT * FROM CampEntity camp WHERE camp.schoolId = ? ORDER BY camp.id;
 
+
+CREATE TABLE DetailedCampEntity(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    startDate TEXT NOT NULL,
+    endDate TEXT NOT NULL,
+    schoolId TEXT NOT NULL,
+    curriculum TEXT NOT NULL,
+    organizationId TEXT NOT NULL,
+    campGroupsSize INTEGER NOT NULL,
+    createdAt TEXT NOT NULL,
+    organizationName TEXT NOT NULL,
+    schoolName TEXT NOT NULL,
+    studentsSize INTEGER NOT NULL
+);
+
+insertDetailedCamp:
+INSERT OR REPLACE INTO DetailedCampEntity(id, name, startDate, endDate, schoolId, curriculum, organizationId, campGroupsSize, createdAt, organizationName, schoolName, studentsSize)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?);
+
+
+selectDetailedCampById:
+SELECT camp.* FROM DetailedCampEntity camp WHERE camp.id = ? LIMIT 1;
+
 selectAllCamps:
 SELECT * FROM CampEntity ORDER BY id;
+
+CREATE TABLE StudentEntity(
+    id TEXT PRIMARY KEY,
+    firstName TEXT NOT NULL,
+    middleName TEXT NOT NULL
+);
+
 
 insertStudent:
 INSERT OR REPLACE INTO StudentEntity(id, firstName, middleName)

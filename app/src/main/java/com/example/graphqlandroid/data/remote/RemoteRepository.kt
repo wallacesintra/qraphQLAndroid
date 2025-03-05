@@ -10,6 +10,8 @@ import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.Results
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.camps.DetailedCampInfo
+import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
@@ -33,4 +35,8 @@ sealed interface RemoteRepository {
     suspend fun fetchOrganization():Flow<Results<List<AppOrganization?>>>
 
     suspend fun createCamp(createCampRequestDTO: CreateCampRequestDTO): Flow<Results<CreateCamp>>
+
+    suspend fun fetchCamps(): Flow<Results<List<AppCamp?>>>
+
+    suspend fun fetchDetailedCampInfo(campId: String): Flow<Results<DetailedCampInfo>>
 }

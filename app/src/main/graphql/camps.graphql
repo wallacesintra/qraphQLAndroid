@@ -10,3 +10,45 @@ mutation CreateCamp($input: CreateCampInput!) {
         schoolId
     }
 }
+
+
+query FetchDetailedCampInfo($campId: ID!) {
+    camp(id: $campId) {
+        id
+        name
+        startDate
+        endDate
+        createdAt
+        curriculum
+        organizationId
+        schoolId
+        organization {
+            name
+            id
+        }
+        students {
+            id
+        }
+        school {
+            id
+            name
+        }
+        campGroups {
+            id
+            name
+        }
+    }
+}
+
+
+query FetchCamp {
+    camps {
+        id
+        name
+        startDate
+        endDate
+        curriculum
+        createdAt
+        schoolId
+    }
+}

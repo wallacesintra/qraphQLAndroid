@@ -3,6 +3,7 @@ package com.example.graphqlandroid.data.local
 import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.camps.DetailedCampInfo
 import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
@@ -41,4 +42,8 @@ interface DatabaseSource {
     suspend fun insertCamp(appCamp: AppCamp)
 
     suspend fun getCamps(): Flow<List<AppCamp>>
+
+    suspend fun getDetailedCampById(campId: String): Flow<DetailedCampInfo?>
+
+    suspend fun insertDetailedCampInfo(detailedCamp: DetailedCampInfo)
 }

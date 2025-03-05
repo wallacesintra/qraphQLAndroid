@@ -3,6 +3,8 @@ package com.example.graphqlandroid.presentation.school
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,12 +27,22 @@ import com.example.graphqlandroid.utils.Utils
 @Composable
 fun CampItem(
     modifier: Modifier = Modifier,
-    camp: AppCamp
+    camp: AppCamp,
+    onClick: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
+
             .clip(RoundedCornerShape(10.dp))
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f),
+                shape = RoundedCornerShape(10.dp)
+            )
             .sizeIn(minWidth = 100.dp, minHeight = 120.dp, maxWidth = 240.dp, maxHeight = 200.dp)
+            .clickable(
+                onClick = onClick
+            )
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
@@ -46,7 +58,7 @@ fun CampItem(
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.padding(4.dp))
 
             RowTitleAndText(
                 title = "Curriculum",

@@ -3,6 +3,7 @@ package com.example.graphqlandroid.presentation.home
 import androidx.compose.runtime.Composable
 import com.example.graphqlandroid.R
 import com.example.graphqlandroid.navController
+import com.example.graphqlandroid.presentation.camp.CampListScreen
 import com.example.graphqlandroid.presentation.dashboard.DashboardScreen
 import com.example.graphqlandroid.presentation.navigation.CreateCampPage
 import com.example.graphqlandroid.presentation.navigation.CreateSchoolPage
@@ -28,18 +29,19 @@ enum class AppScreen(
         bottomBarTitle = "Schools",
         icon = R.drawable.school_24dp_e8eaed_fill0_wght400_grad0_opsz24_1_
     ),
+    Camp(
+        screen = {CampListScreen()},
+        addAction = { navController.navigate(CreateCampPage)},
+        topBarTitle = "Camps",
+        bottomBarTitle = "Camps",
+        icon = R.drawable.camping_24dp_e8eaed_fill0_wght400_grad0_opsz24
+    ),
     Students(
         screen = {},
         topBarTitle = "My Students",
         bottomBarTitle = "Students",
         icon = R.drawable.group_24dp_e8eaed_fill0_wght400_grad0_opsz24
     ),
-    Camp(
-        screen = {},
-        addAction = { navController.navigate(CreateCampPage)},
-        topBarTitle = "Camps",
-        bottomBarTitle = "Camps",
-        icon = R.drawable.camping_24dp_e8eaed_fill0_wght400_grad0_opsz24
-    ),
+
 
 }
