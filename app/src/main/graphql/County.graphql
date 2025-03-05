@@ -1,0 +1,12 @@
+query GetCounties {
+    counties {
+        id
+        name
+        latitude
+        longitude
+        countryId
+        country {
+            name
+        }
+    }
+}

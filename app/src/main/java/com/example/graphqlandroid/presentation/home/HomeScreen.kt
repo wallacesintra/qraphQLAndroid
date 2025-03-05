@@ -23,7 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.HomeViewModel
+import com.example.graphqlandroid.navController
 import com.example.graphqlandroid.presentation.common.AppCircularLoading
+import com.example.graphqlandroid.presentation.navigation.CreateSchoolPage
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -75,7 +77,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 AppScreen.Home -> {}
                 else ->
                     FloatingActionButton(
-                        onClick = {}
+                        onClick = currentScreen.addAction
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,

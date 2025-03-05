@@ -10,3 +10,6 @@ object HomePage
 
 @Serializable
 data class SchoolPage(val id: String)
+
+@Serializable
+data object CreateSchoolPage

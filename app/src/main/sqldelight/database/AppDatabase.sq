@@ -94,6 +94,9 @@ INSERT OR REPLACE INTO CountyEntity(id, name, latitude, longitude, countryId, co
 deleteCouty:
 DELETE FROM CountyEntity;
 
+selectAllCounties:
+SELECT * FROM CountyEntity ORDER BY id;
+
 selectCountyById:
 SELECT county.* FROM CountyEntity  county WHERE county.id = ? LIMIT 1;
 
@@ -135,3 +138,19 @@ insertStudent:
 INSERT OR REPLACE INTO StudentEntity(id, firstName, middleName)
 VALUES (?, ?,?);
 
+CREATE TABLE OrganizationEntity(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    createdAt TEXT NOT NULL,
+    accountType TEXT NOT NULL,
+    countryId TEXT NOT NULL
+);
+
+insertOrganization:
+INSERT OR REPLACE INTO OrganizationEntity(id, name, createdAt, accountType, countryId) VALUES (?,?,?,?,?);
+
+deleteOrganization:
+DELETE FROM OrganizationEntity;
+
+selectAllOrganizations:
+SELECT * FROM OrganizationEntity ORDER BY id;

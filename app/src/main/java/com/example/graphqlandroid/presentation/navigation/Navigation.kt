@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.toRoute
 import com.example.graphqlandroid.presentation.FirstScreen
 import com.example.graphqlandroid.presentation.home.HomeScreen
+import com.example.graphqlandroid.presentation.school.CreateSchoolScreen
 import com.example.graphqlandroid.presentation.school.SchoolScreen
 
 @Composable
@@ -28,6 +29,10 @@ fun Navigation(navController: NavHostController){
             val args = backStackEntry.toRoute<SchoolPage>()
 
             SchoolScreen(schoolId = args.id)
+        }
+
+        composable<CreateSchoolPage> {
+            CreateSchoolScreen()
         }
     }
 }

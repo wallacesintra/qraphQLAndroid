@@ -1,7 +1,9 @@
 package com.example.graphqlandroid.data.local
 
+import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
 import kotlinx.coroutines.flow.Flow
@@ -22,4 +24,14 @@ interface DatabaseSource {
     suspend fun insertDetailedSchoolInfo(detailedSchool: DetailedSchool)
 
     suspend fun getDetailedSchoolInfo(schoolId: String): Flow<DetailedSchool?>
+
+    suspend fun insertCounties(counties: List<AppCounty>)
+
+    suspend fun insertCounty(appCounty: AppCounty)
+
+    suspend fun getCounties(): Flow<List<AppCounty>>
+
+    suspend fun insertOrganization(appOrganization: AppOrganization)
+
+    suspend fun getOrganizations(): Flow<List<AppOrganization>>
 }
