@@ -6,7 +6,7 @@ This project is an Android application built using Kotlin and Jetpack Compose. I
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/graphqlandroid.git
+    git clone https://github.com/wallacesintra/qraphQLAndroid.git
     ```
 2. Open the project in Android Studio.
 3. Sync the project with Gradle files.
