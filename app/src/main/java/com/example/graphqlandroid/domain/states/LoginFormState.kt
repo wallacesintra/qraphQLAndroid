@@ -3,8 +3,8 @@ package com.example.graphqlandroid.domain.states
 import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 
 data class LoginFormState(
-    val email: String = "",
-    val password: String = "",
+    val email: String = "instructor@example.com",
+    val password: String = "hashedpassword123",
     val isPasswordVisible: Boolean = false,
 
     /* Errors*/

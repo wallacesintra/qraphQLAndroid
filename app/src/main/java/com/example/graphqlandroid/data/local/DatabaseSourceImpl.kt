@@ -8,9 +8,12 @@ import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.school.toSchool
 import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
+import com.example.graphqlandroid.domain.mapper.toAppOrganization
 import com.example.graphqlandroid.domain.mapper.toUser
+import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
 import kotlinx.coroutines.Dispatchers
@@ -148,6 +151,58 @@ class DatabaseSourceImpl(
 
                 }
             }
+            .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun insertCounties(counties: List<AppCounty>) {
+        queries.transaction {
+            counties.forEach{appCounty ->
+                queries.insertCounty(
+                    id = appCounty.id,
+                    name = appCounty.name,
+                    latitude = appCounty.latitude,
+                    longitude = appCounty.longitude,
+                    countryId = appCounty.country?.id ?: "",
+                    country = appCounty.country?.name
+                )
+            }
+        }
+    }
+
+    override suspend fun insertCounty(appCounty: AppCounty) {
+        queries.insertCounty(
+            id = appCounty.id,
+            name = appCounty.name,
+            latitude = appCounty.latitude,
+            longitude = appCounty.longitude,
+            countryId = appCounty.country?.id ?: "",
+            country = appCounty.country?.name
+        )
+    }
+
+    override suspend fun insertOrganization(appOrganization: AppOrganization) {
+        queries.insertOrganization(
+            id = appOrganization.id,
+            name = appOrganization.name,
+            createdAt = appOrganization.createdAt,
+            accountType = appOrganization.accountType,
+            countryId = appOrganization.countryId
+        )
+    }
+
+    override suspend fun getOrganizations(): Flow<List<AppOrganization>> {
+        return queries.selectAllOrganizations()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .mapNotNull { it.map { organizationEntity -> organizationEntity.toAppOrganization() } }
+            .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun getCounties(): Flow<List<AppCounty>> {
+        return queries.selectAllCounties()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .mapNotNull { it.map { countyEntity -> countyEntity.toAppCounty() } }
             .flowOn(Dispatchers.Main)
     }
 

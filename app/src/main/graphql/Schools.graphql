@@ -55,6 +55,10 @@ mutation CreateSchool($input: CreateSchoolInput!) {
             name
             latitude
             longitude
+            countryId
+            country {
+                name
+            }
         }
         camps {
             id

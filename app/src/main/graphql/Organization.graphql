@@ -1,0 +1,9 @@
+query FetchOrganizations {
+    organizations {
+        id
+        name
+        countryId
+        createdAt
+        accountType
+    }
+}
