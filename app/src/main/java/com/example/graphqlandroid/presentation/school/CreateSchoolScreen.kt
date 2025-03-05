@@ -1,6 +1,8 @@
 package com.example.graphqlandroid.presentation.school
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.domain.actions.CreateSchoolAction
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.schools.IndividualSchoolViewModel
@@ -149,8 +152,10 @@ fun CreateSchoolScreen(modifier: Modifier = Modifier) {
         }
 
         LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(innerPadding)
+                .padding(horizontal = 12.dp)
         ) {
 
             item {
@@ -188,7 +193,15 @@ fun CreateSchoolScreen(modifier: Modifier = Modifier) {
                                 contentDescription = "Show county list"
                             )
                         }
-                    }
+                    },
+                    modifier = Modifier
+                        .clickable(
+                            onClick = {
+                                individualSchoolViewModel.onCreateSchoolAction(
+                                    createSchoolAction = CreateSchoolAction.OnShowCountyList(show = !createSchoolForm.isSelectingCounty)
+                                )
+                            }
+                        )
                 )
             }
 
@@ -213,7 +226,15 @@ fun CreateSchoolScreen(modifier: Modifier = Modifier) {
                                 contentDescription = "Show organization list"
                             )
                         }
-                    }
+                    },
+                    modifier = Modifier
+                        .clickable(
+                            onClick = {
+                                individualSchoolViewModel.onCreateSchoolAction(
+                                    createSchoolAction = CreateSchoolAction.OnShowOrganizationList(show = !createSchoolForm.isSelectingOrganization)
+                                )
+                            }
+                        )
                 )
             }
 

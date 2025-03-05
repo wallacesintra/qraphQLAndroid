@@ -9,10 +9,12 @@ import com.example.graphqlandroid.domain.mapper.school.toSchool
 import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
+import com.example.graphqlandroid.domain.mapper.toCampEntity
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.AppUser
 import com.example.graphqlandroid.domain.models.CountAggregrate
+import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
@@ -71,12 +73,14 @@ class DatabaseSourceImpl(
     }
 
     override suspend fun insertSchool(appSchool: AppSchool) {
+
         queries.insertSchool(
             id = appSchool.id,
             name = appSchool.name,
             countyName = appSchool.countyName,
             countryName = appSchool.countryName
         )
+
     }
 
     override suspend fun getSchools(): Flow<List<AppSchool>> {
@@ -85,6 +89,10 @@ class DatabaseSourceImpl(
             .mapToList(Dispatchers.IO)
             .map { it.map { schoolEntity -> schoolEntity.toSchool() }}
             .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun deleteSchools() {
+        queries.deleteSchools()
     }
 
     override suspend fun insertDetailedSchoolInfo(detailedSchool: DetailedSchool) {
@@ -195,6 +203,25 @@ class DatabaseSourceImpl(
             .asFlow()
             .mapToList(Dispatchers.IO)
             .mapNotNull { it.map { organizationEntity -> organizationEntity.toAppOrganization() } }
+            .flowOn(Dispatchers.Main)
+    }
+
+    override suspend fun insertCamp(appCamp: AppCamp) {
+        queries.insertCamp(
+            id = appCamp.id,
+            name = appCamp.name,
+            startDate = appCamp.startDate,
+            endDate = appCamp.endDate,
+            curriculum = appCamp.curriculum,
+            schoolId = appCamp.schoolId
+        )
+    }
+
+    override suspend fun getCamps(): Flow<List<AppCamp>> {
+        return queries.selectAllCamps()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .mapNotNull { it.map { campEntity -> campEntity.toAppCamp() } }
             .flowOn(Dispatchers.Main)
     }
 

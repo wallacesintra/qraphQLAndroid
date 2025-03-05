@@ -96,4 +96,7 @@ dependencies {
     implementation(libs.android.driver)
     implementation(libs.sqlDelight.coroutine)
 
+    //kotlin datetime
+    implementation(libs.kotlinx.datetime)
+
 }

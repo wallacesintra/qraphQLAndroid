@@ -134,6 +134,9 @@ DELETE FROM CampEntity;
 selectCampBySchoolId:
 SELECT * FROM CampEntity camp WHERE camp.schoolId = ? ORDER BY camp.id;
 
+selectAllCamps:
+SELECT * FROM CampEntity ORDER BY id;
+
 insertStudent:
 INSERT OR REPLACE INTO StudentEntity(id, firstName, middleName)
 VALUES (?, ?,?);

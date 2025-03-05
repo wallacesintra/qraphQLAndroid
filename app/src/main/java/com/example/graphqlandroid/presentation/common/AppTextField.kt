@@ -1,5 +1,6 @@
 package com.example.graphqlandroid.presentation.common
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ fun AppTextField(
     error: String?,
     singleLine: Boolean = true,
     onValueChanged: (String) -> Unit,
+    onTextFieldClick: () -> Unit = {},
     keyboardType: KeyboardType = KeyboardType.Text,
     passwordVisible: Boolean = true,
     enabled: Boolean = true,
@@ -92,9 +94,15 @@ fun AppTextField(
             onValueChange = onValueChanged,
             shape = RoundedCornerShape(10.dp),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            modifier = textFieldModifier.fillMaxWidth().padding(vertical = 8.dp).testTag(label.lowercase()),
             trailingIcon = trailingIcon,
-            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onBackground)
+            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+            modifier = Modifier
+                .clickable(
+                    onClick = onTextFieldClick
+                )
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .testTag(label.lowercase()),
         )
         if (error != null) {
             Text(
