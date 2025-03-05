@@ -30,6 +30,9 @@ class SchoolViewModel(
                 .flowOn(Dispatchers.IO)
                 .collect{ response ->
                     response.data?.let { appSchools ->
+
+                        databaseSource.deleteSchools()
+
                         appSchools.forEach { appSchool ->
                             if (appSchool != null) {
                                 databaseSource.insertSchool(appSchool)

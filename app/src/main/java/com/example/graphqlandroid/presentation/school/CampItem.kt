@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.graphqlandroid.domain.models.school.AppCamp
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ fun CampItem(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
-            .sizeIn(minWidth = 100.dp, minHeight = 120.dp, maxWidth = 300.dp, maxHeight = 200.dp)
+            .sizeIn(minWidth = 100.dp, minHeight = 120.dp, maxWidth = 240.dp, maxHeight = 200.dp)
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
@@ -39,7 +40,10 @@ fun CampItem(
         ) {
 
             Text(
-                text = camp.name
+                text = camp.name,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(Modifier.padding(8.dp))

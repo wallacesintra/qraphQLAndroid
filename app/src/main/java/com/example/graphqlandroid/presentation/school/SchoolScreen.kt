@@ -152,9 +152,8 @@ fun SchoolScreen(
                                 Spacer(Modifier.padding(4.dp))
 
                                 LazyRow(
-                                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     modifier = Modifier
-//                                        .fillMaxWidth()
                                 ) {
                                     if (school.camps.isEmpty()){
                                         item {

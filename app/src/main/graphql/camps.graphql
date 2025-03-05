@@ -1,0 +1,12 @@
+mutation CreateCamp($input: CreateCampInput!) {
+    createCamp(input: $input) {
+        id
+        name
+        startDate
+        endDate
+        createdAt
+        curriculum
+        organizationId
+        schoolId
+    }
+}

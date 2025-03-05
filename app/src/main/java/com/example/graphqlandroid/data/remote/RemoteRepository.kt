@@ -2,6 +2,8 @@ package com.example.graphqlandroid.data.remote
 
 import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 import com.example.graphqlandroid.domain.dto.authentication.LoginResponseDTO
+import com.example.graphqlandroid.domain.dto.camp.CreateCamp
+import com.example.graphqlandroid.domain.dto.camp.CreateCampRequestDTO
 import com.example.graphqlandroid.domain.dto.school.CreateSchool
 import com.example.graphqlandroid.domain.dto.school.CreateSchoolDTO
 import com.example.graphqlandroid.domain.models.AppOrganization
@@ -29,4 +31,6 @@ sealed interface RemoteRepository {
     suspend fun fetchCounties(): Flow<Results<List<AppCounty?>>>
 
     suspend fun fetchOrganization():Flow<Results<List<AppOrganization?>>>
+
+    suspend fun createCamp(createCampRequestDTO: CreateCampRequestDTO): Flow<Results<CreateCamp>>
 }

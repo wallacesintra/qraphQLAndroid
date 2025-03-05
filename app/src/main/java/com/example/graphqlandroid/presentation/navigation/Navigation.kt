@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.toRoute
 import com.example.graphqlandroid.presentation.FirstScreen
+import com.example.graphqlandroid.presentation.camp.CreateCampScreen
 import com.example.graphqlandroid.presentation.home.HomeScreen
 import com.example.graphqlandroid.presentation.school.CreateSchoolScreen
 import com.example.graphqlandroid.presentation.school.SchoolScreen
@@ -34,5 +35,10 @@ fun Navigation(navController: NavHostController){
         composable<CreateSchoolPage> {
             CreateSchoolScreen()
         }
+
+        composable<CreateCampPage> {
+            CreateCampScreen()
+        }
+
     }
 }

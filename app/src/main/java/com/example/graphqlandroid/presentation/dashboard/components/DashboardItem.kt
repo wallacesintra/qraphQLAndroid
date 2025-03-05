@@ -41,7 +41,7 @@ fun DashboardItem(
         MaterialTheme.colorScheme.primaryContainer
     )
 
-    val backgroundColor = remember { colorList.random() }
+    val backgroundColor = colorList.random()
 
     var animationPlayed by remember {
         mutableStateOf(false)

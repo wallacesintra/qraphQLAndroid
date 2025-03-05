@@ -2,6 +2,7 @@ package com.example.graphqlandroid.data.remote
 
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
+import com.example.CreateCampMutation
 import com.example.CreateSchoolMutation
 import com.example.FetchOrganizationsQuery
 import com.example.GetCountiesQuery
@@ -12,14 +13,19 @@ import com.example.GetUserQuery
 import com.example.LoginMutation
 import com.example.graphqlandroid.domain.dto.authentication.LoginInputRequestDTO
 import com.example.graphqlandroid.domain.dto.authentication.LoginResponseDTO
+import com.example.graphqlandroid.domain.dto.camp.CreateCamp
+import com.example.graphqlandroid.domain.dto.camp.CreateCampRequestDTO
 import com.example.graphqlandroid.domain.dto.school.CreateSchool
 import com.example.graphqlandroid.domain.dto.school.CreateSchoolDTO
 import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.school.toCreateSchool
 import com.example.graphqlandroid.domain.mapper.school.toDetailedSchool
 import com.example.graphqlandroid.domain.mapper.school.toSchool
+import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
+import com.example.graphqlandroid.domain.mapper.toCreateCamp
+import com.example.graphqlandroid.domain.mapper.toCurriculum
 import com.example.graphqlandroid.domain.mapper.toUser
 import com.example.graphqlandroid.domain.models.AppOrganization
 import com.example.graphqlandroid.domain.models.Results
@@ -28,6 +34,7 @@ import com.example.graphqlandroid.domain.models.CountAggregrate
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
+import com.example.type.CreateCampInput
 import com.example.type.CreateSchoolInput
 import com.example.type.LoginInput
 import kotlinx.coroutines.Dispatchers
@@ -52,12 +59,11 @@ class RemoteRepositoryImpl(
                         )
                     )
                     .execute()
-                    .data
 
-                if (response != null){
-                    emit(Results.success(data = response.login?.let { LoginResponseDTO(token = it.token, appUser = it.user.toUser()) }!!))
+                if (response.data != null){
+                    emit(Results.success(data = response.data!!.login?.let { LoginResponseDTO(token = it.token, appUser = it.user.toUser()) }!!))
                 }else{
-                    emit(Results.error("Login failed"))
+                    emit(Results.error(msg = response.errors?.first()?.message ?: "Something went wrong"))
                 }
 
             }catch (e: Exception){
@@ -212,6 +218,36 @@ class RemoteRepositoryImpl(
 
             }catch (e: Exception){
                 emit(Results.error(msg = e.message ?: "Error fetching organizations"))
+            }
+        }
+    }
+
+    override suspend fun createCamp(createCampRequestDTO: CreateCampRequestDTO): Flow<Results<CreateCamp>> {
+        return flow {
+            try {
+                val response = apolloClient
+                    .mutation(
+                        CreateCampMutation(
+                            input = CreateCampInput(
+                                name = createCampRequestDTO.name,
+                                startDate = createCampRequestDTO.startDate,
+                                endDate = createCampRequestDTO.endDate,
+                                curriculum = createCampRequestDTO.curriculum.toCurriculum(),
+                                organizationId = createCampRequestDTO.organizationId,
+                                schoolId = createCampRequestDTO.schoolId
+                            )
+                        )
+                    )
+                    .execute()
+
+                if (response.data != null){
+                    emit(Results.success(data = response.data!!.createCamp?.toCreateCamp()))
+                }else{
+                    emit(Results.error(msg = response.errors?.first()?.message ?: "Error creating camp"))
+                }
+
+            }catch (e: Exception){
+                emit(Results.error(msg = e.message ?: "Error creating camp"))
             }
         }
     }
