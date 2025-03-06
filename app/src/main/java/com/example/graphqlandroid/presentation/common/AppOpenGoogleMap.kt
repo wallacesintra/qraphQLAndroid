@@ -1,6 +1,7 @@
 package com.example.graphqlandroid.presentation.common
 
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -21,13 +22,15 @@ fun AppOpenGoogleMap(
     TextButton(
         modifier = modifier,
         onClick = {
-            val gmmIntentUri = "geo:$latitude,$longitude".toUri()
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            if (mapIntent.resolveActivity(context.packageManager) != null) {
-                context.startActivity(mapIntent)
-            }else{
-                Toast.makeText(context, "Google Map not available", Toast.LENGTH_SHORT).show()
+
+            val viewMapIntent: Intent = Intent(Intent.ACTION_VIEW, "geo: $latitude, $longitude".toUri())
+                .setPackage("com.google.android.apps.maps")
+
+
+            try {
+                context.startActivity(viewMapIntent)
+            }catch (e: Exception){
+                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         }
     ) {

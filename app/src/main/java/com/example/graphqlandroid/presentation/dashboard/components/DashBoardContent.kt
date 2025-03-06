@@ -67,7 +67,7 @@ fun DashBoardContent(
         }
 
         Text(
-            text = "Click to see more",
+            text = "see more",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
