@@ -40,7 +40,8 @@ fun AppTextField(
     imeAction: ImeAction = ImeAction.Next,
     trailingIcon: @Composable () -> Unit = {},
     leadingIcon: @Composable() (() -> Unit)? = null,
-    textFieldModifier: Modifier = Modifier
+    textFieldModifier: Modifier = Modifier,
+    errorModifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
@@ -96,7 +97,7 @@ fun AppTextField(
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = trailingIcon,
             textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onBackground),
-            modifier = Modifier
+            modifier = textFieldModifier
                 .clickable(
                     onClick = onTextFieldClick
                 )
@@ -106,9 +107,10 @@ fun AppTextField(
         )
         if (error != null) {
             Text(
+                modifier = errorModifier,
                 text = error,
                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),
-                color = MaterialTheme.colorScheme.error,
+                color = MaterialTheme.colorScheme.error
             )
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -132,7 +133,11 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                             tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
                             modifier = Modifier.size(24.dp)
                         )
-                    }
+                    },
+                    textFieldModifier = Modifier
+                        .testTag("EmailTextField"),
+                    errorModifier = Modifier
+                        .testTag("EmailError")
                 )
             }
 
@@ -168,7 +173,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                                 contentDescription = null,
                             )
                         }
-                    }
+                    },
+                    textFieldModifier = Modifier
+                        .testTag("PasswordTextField")
                 )
             }
 
@@ -181,7 +188,10 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                     content = {
                         when(loginResponseState.status){
                             ResultStatus.LOADING -> {
-                                AppButtonLoadingContent()
+                                AppButtonLoadingContent(
+                                    modifier = Modifier
+                                        .testTag("LoadingContent")
+                                )
                             }
                             ResultStatus.INITIAL,
                             ResultStatus.SUCCESS,
@@ -194,7 +204,8 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
                     },
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .testTag("LoginButton"),
 
                 )
 

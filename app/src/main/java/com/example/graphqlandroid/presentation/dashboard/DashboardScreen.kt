@@ -81,7 +81,7 @@ fun DashboardScreen(modifier: Modifier = Modifier) {
                     if (countState.data == null) return@LazyColumn
 
                     item {
-
+                        Spacer(Modifier.padding(4.dp))
 
                         Text(
                             text = "Hello, ${userState.data?.firstName} \uD83D\uDC4B",
@@ -153,6 +153,8 @@ fun DashboardScreen(modifier: Modifier = Modifier) {
                         }
 
                     }
+
+
 
                     item { Spacer(Modifier.padding(24.dp)) }
 
