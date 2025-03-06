@@ -15,6 +15,7 @@ import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
+import com.example.graphqlandroid.domain.models.students.AppStudent
 import kotlinx.coroutines.flow.Flow
 
 sealed interface RemoteRepository {
@@ -39,4 +40,6 @@ sealed interface RemoteRepository {
     suspend fun fetchCamps(): Flow<Results<List<AppCamp?>>>
 
     suspend fun fetchDetailedCampInfo(campId: String): Flow<Results<DetailedCampInfo>>
+
+    suspend fun fetchStudents(): Flow<Results<List<AppStudent?>>>
 }

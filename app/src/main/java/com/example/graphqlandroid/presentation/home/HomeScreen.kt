@@ -24,9 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.domain.models.ResultStatus
 import com.example.graphqlandroid.domain.viewmodels.HomeViewModel
-import com.example.graphqlandroid.navController
 import com.example.graphqlandroid.presentation.common.AppCircularLoading
-import com.example.graphqlandroid.presentation.navigation.CreateSchoolPage
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -34,6 +32,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     val homeViewModel = koinViewModel<HomeViewModel>()
     val userState by homeViewModel.appUserStateFlow.collectAsState()
     val currentScreen = homeViewModel.currentScreen
+
 
     Scaffold(
         topBar = {

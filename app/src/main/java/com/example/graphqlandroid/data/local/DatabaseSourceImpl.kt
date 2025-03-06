@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.graphqlandroid.AppDatabase
 import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.school.toSchool
+import com.example.graphqlandroid.domain.mapper.students.toAppStudents
 import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
@@ -19,6 +20,7 @@ import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
+import com.example.graphqlandroid.domain.models.students.AppStudent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -88,7 +90,7 @@ class DatabaseSourceImpl(
         return queries.selectAllSchool()
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map { it.map { schoolEntity -> schoolEntity.toSchool() }}
+            .map { it.map { schoolEntity -> schoolEntity.toSchool() } }
             .flowOn(Dispatchers.Main)
     }
 
@@ -140,7 +142,7 @@ class DatabaseSourceImpl(
     }
 
     override suspend fun getDetailedSchoolInfo(schoolId: String): Flow<DetailedSchool?> {
-        return queries.selectDetailedSchoolById(id = schoolId )
+        return queries.selectDetailedSchoolById(id = schoolId)
             .asFlow()
             .mapToOneOrNull(Dispatchers.IO)
             .map { entity ->
@@ -165,7 +167,7 @@ class DatabaseSourceImpl(
 
     override suspend fun insertCounties(counties: List<AppCounty>) {
         queries.transaction {
-            counties.forEach{appCounty ->
+            counties.forEach { appCounty ->
                 queries.insertCounty(
                     id = appCounty.id,
                     name = appCounty.name,
@@ -251,6 +253,46 @@ class DatabaseSourceImpl(
         )
     }
 
+    override suspend fun insertStudent(appStudent: AppStudent) {
+        queries.insertAppStudent(
+            id = appStudent.id,
+            firstName = appStudent.firstName,
+            lastName = appStudent.lastName,
+            age = appStudent.age.toLong(),
+            grade = appStudent.grade.toLong(),
+            campId = appStudent.campId,
+            campName = appStudent.camp.name,
+            schoolId = appStudent.camp.schoolId
+        )
+    }
+
+    override suspend fun insertStudents(appStudents: List<AppStudent>) {
+        queries.transaction {
+            appStudents.forEach { appStudent ->
+                queries.insertAppStudent(
+                    id = appStudent.id,
+                    firstName = appStudent.firstName,
+                    lastName = appStudent.lastName,
+                    age = appStudent.age.toLong(),
+                    grade = appStudent.grade.toLong(),
+                    campId = appStudent.campId,
+                    campName = appStudent.camp.name,
+                    schoolId = appStudent.camp.schoolId
+                )
+            }
+        }
+    }
+
+
+    override suspend fun getStudents(): Flow<List<AppStudent>> {
+        return queries.selectAllAppStudents()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { it -> it.map { it.toAppStudents() } }
+            .flowOn(Dispatchers.Main)
+    }
+
+
     override suspend fun getCounties(): Flow<List<AppCounty>> {
         return queries.selectAllCounties()
             .asFlow()
@@ -258,5 +300,6 @@ class DatabaseSourceImpl(
             .mapNotNull { it.map { countyEntity -> countyEntity.toAppCounty() } }
             .flowOn(Dispatchers.Main)
     }
+
 
 }

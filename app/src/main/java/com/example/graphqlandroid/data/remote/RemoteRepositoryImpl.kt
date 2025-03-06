@@ -6,6 +6,7 @@ import com.example.CreateCampMutation
 import com.example.CreateSchoolMutation
 import com.example.FetchCampQuery
 import com.example.FetchOrganizationsQuery
+import com.example.FetchStudentsQuery
 import com.example.GetCountiesQuery
 import com.example.GetCountsQuery
 import com.example.GetDetailedSchoolInfoQuery
@@ -22,6 +23,7 @@ import com.example.graphqlandroid.domain.mapper.dashboard.toCountAggregrate
 import com.example.graphqlandroid.domain.mapper.school.toCreateSchool
 import com.example.graphqlandroid.domain.mapper.school.toDetailedSchool
 import com.example.graphqlandroid.domain.mapper.school.toSchool
+import com.example.graphqlandroid.domain.mapper.students.toAppStudent
 import com.example.graphqlandroid.domain.mapper.toAppCamp
 import com.example.graphqlandroid.domain.mapper.toAppCounty
 import com.example.graphqlandroid.domain.mapper.toAppOrganization
@@ -38,6 +40,7 @@ import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
+import com.example.graphqlandroid.domain.models.students.AppStudent
 import com.example.type.CreateCampInput
 import com.example.type.CreateSchoolInput
 import com.example.type.LoginInput
@@ -295,6 +298,27 @@ class RemoteRepositoryImpl(
             }catch (e: Exception){
                 emit(Results.error(msg = e.message ?: "Error fetching camp"))
             }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchStudents(): Flow<Results<List<AppStudent?>>> {
+        return flow {
+
+            try {
+                val response = apolloClient
+                    .query(query = FetchStudentsQuery())
+                    .execute()
+
+                if (response.data != null){
+                    emit(Results.success(data = response.data?.students?.map { it?.toAppStudent() }))
+                }else {
+                    emit(Results.error(msg = response.errors?.first()?.message ?: "Error fetching students"))
+                }
+
+            }catch (e: Exception){
+                emit(Results.error(msg = e.message ?: "Error fetching students"))
+            }
+
         }.flowOn(Dispatchers.IO)
     }
 }

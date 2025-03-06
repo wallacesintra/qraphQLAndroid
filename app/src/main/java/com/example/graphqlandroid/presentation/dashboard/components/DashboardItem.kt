@@ -1,6 +1,7 @@
 package com.example.graphqlandroid.presentation.dashboard.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.graphqlandroid.utils.Utils
@@ -54,10 +56,16 @@ fun DashboardItem(
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier = modifier
-            .widthIn(min = 120.dp, max = 270.dp)
+            .widthIn(min = 110.dp, max = 700.dp)
             .heightIn(min = 120.dp, max = 160.dp )
             .clip(RoundedCornerShape(5))
-            .background(backgroundColor)
+            .border(
+                width = 1.dp,
+//                color = LocalContentColor.current.copy(alpha = 0.1f),
+                color = LocalContentColor.current.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(5)
+            )
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(2.dp),
@@ -68,7 +76,8 @@ fun DashboardItem(
                 text= Utils.animatedNumberString(number = count.toString(), animatedPlayed = animationPlayed),
                 style = MaterialTheme.typography.displayLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = LocalContentColor.current
+                    color = LocalContentColor.current,
+                    fontStyle = FontStyle.Italic
                 )
             )
             Text(
