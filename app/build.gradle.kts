@@ -102,4 +102,7 @@ dependencies {
     //kotlin datetime
     implementation(libs.kotlinx.datetime)
 
+    //crypto
+    implementation(libs.androidx.security.crypto)
+
 }

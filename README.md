@@ -6,26 +6,23 @@ This project is an Android application built using Kotlin and Jetpack Compose. I
 
 ### Home Screen
 
-![Home Screen](screenshots/home.png)
+<img src="screenshots/home.png" alt="Home Screen" width="300"/>
 
-![video](screenshots/graphql.gif)
+<img src="screenshots/graphql.gif" alt="video" width="300"/>
 
 ### School
 
-![School List Screen](screenshots/schoollist.png)
-![School](screenshots/school.png)
-![Create School](screenshots/createschool.png)
+<img src="screenshots/schoollist.png" alt="School List Screen" width="300"/>
+<img src="screenshots/school.png" alt="School" width="300"/>
+<img src="screenshots/createschool.png" alt="Create School" width="300"/>
 
-![school video](screenshots/schoolqraphQL.gif)
-![create school](screenshots/createSchool.gif)
+<img src="screenshots/schoolqraphQL.gif" alt="school video" width="300"/>
+<img src="screenshots/createSchool.gif" alt="create school" width="300"/>
 
 ### Camp
 
-![Camp List Screen](screenshots/campList.png)
-![Create Camp](screenshots/createCamp.png)
-
-
-
+<img src="screenshots/campList.png" alt="Camp List Screen" width="300"/>
+<img src="screenshots/createCamp.png" alt="Create Camp" width="300"/>
 
 ## Setup Instructions
 
@@ -63,7 +60,7 @@ The project follows the MVVM (Model-View-ViewModel) architecture pattern. The ma
 
 ## Challenges Faced
 
-- **Testing**: I was not able to test all the view models and classes. I followed the official documentation and examples to write tests for the application.
+- **Testing**: I was not able to test all the view models and classes. I wrote some UI test and unit tests,  I followed the official documentation and examples to write tests for the application.
 - **Complete feature implementation**: Due to time constraints, I was not able to implement all the features of the application. I don't implement the create student and display detailed info about a student features.
 - **Complete UI**: Due to time constraints, I was not able to complete all the UI components and screens. I focused on implementing the core features of the application.
 - **Dependency Injection**: Setting up Koin for dependency injection required some time to understand and implement correctly. I followed the official documentation and examples to set it up.
