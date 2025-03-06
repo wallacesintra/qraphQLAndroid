@@ -167,6 +167,28 @@ insertStudent:
 INSERT OR REPLACE INTO StudentEntity(id, firstName, middleName)
 VALUES (?, ?,?);
 
+
+CREATE TABLE AppStudentEntity(
+    id TEXT PRIMARY KEY,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    grade INTEGER NOT NULL,
+    campId TEXT NOT NULL,
+    campName TEXT NOT NULL,
+    schoolId TEXT NOT NULL
+);
+
+insertAppStudent:
+INSERT OR REPLACE INTO AppStudentEntity(id, firstName, lastName, age, grade, campId, campName, schoolId)
+VALUES (?,?,?,?,?,?,?,?);
+
+deleteAppStudents:
+DELETE FROM AppStudentEntity;
+
+selectAllAppStudents:
+SELECT * FROM AppStudentEntity ORDER BY id;
+
 CREATE TABLE OrganizationEntity(
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,

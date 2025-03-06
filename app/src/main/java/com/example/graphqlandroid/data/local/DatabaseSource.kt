@@ -8,6 +8,7 @@ import com.example.graphqlandroid.domain.models.school.AppCamp
 import com.example.graphqlandroid.domain.models.school.AppCounty
 import com.example.graphqlandroid.domain.models.school.AppSchool
 import com.example.graphqlandroid.domain.models.school.DetailedSchool
+import com.example.graphqlandroid.domain.models.students.AppStudent
 import kotlinx.coroutines.flow.Flow
 
 interface DatabaseSource {
@@ -46,4 +47,10 @@ interface DatabaseSource {
     suspend fun getDetailedCampById(campId: String): Flow<DetailedCampInfo?>
 
     suspend fun insertDetailedCampInfo(detailedCamp: DetailedCampInfo)
+
+    suspend fun insertStudent(appStudent: AppStudent)
+
+    suspend fun insertStudents(appStudents: List<AppStudent>)
+
+    suspend fun getStudents(): Flow<List<AppStudent>>
 }

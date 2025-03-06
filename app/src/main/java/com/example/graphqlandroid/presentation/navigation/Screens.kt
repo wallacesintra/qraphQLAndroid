@@ -19,3 +19,9 @@ data object CreateCampPage
 
 @Serializable
 data class CampPage(val id: String)
+
+@Serializable
+data class StudentPage(val id: String)
+
+@Serializable
+data object StudentListPage

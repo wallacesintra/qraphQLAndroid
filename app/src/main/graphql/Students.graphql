@@ -1,0 +1,15 @@
+query FetchStudents {
+    students {
+        id
+        firstName
+        lastName
+        age
+        grade
+        campId
+        camp {
+            id
+            name
+            schoolId
+        }
+    }
+}

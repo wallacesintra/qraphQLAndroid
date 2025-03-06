@@ -9,6 +9,7 @@ import com.example.graphqlandroid.presentation.navigation.CreateCampPage
 import com.example.graphqlandroid.presentation.navigation.CreateSchoolPage
 import com.example.graphqlandroid.presentation.school.CreateSchoolScreen
 import com.example.graphqlandroid.presentation.school.SchoolListScreen
+import com.example.graphqlandroid.presentation.students.StudentsListScreen
 
 enum class AppScreen(
     val screen: @Composable () -> Unit,
@@ -17,8 +18,10 @@ enum class AppScreen(
     val bottomBarTitle: String,
     val icon:   Int
 ) {
+
     Home(
         screen = { DashboardScreen() },
+        topBarTitle = "Dashboard",
         bottomBarTitle = "Home",
         icon = R.drawable.dashboard_24dp_e8eaed_fill0_wght400_grad0_opsz24
     ),
@@ -37,11 +40,10 @@ enum class AppScreen(
         icon = R.drawable.camping_24dp_e8eaed_fill0_wght400_grad0_opsz24
     ),
     Students(
-        screen = {},
+        screen = { StudentsListScreen()},
         topBarTitle = "My Students",
         bottomBarTitle = "Students",
         icon = R.drawable.group_24dp_e8eaed_fill0_wght400_grad0_opsz24
-    ),
-
+    );
 
 }

@@ -12,6 +12,7 @@ import com.example.graphqlandroid.presentation.camp.CreateCampScreen
 import com.example.graphqlandroid.presentation.home.HomeScreen
 import com.example.graphqlandroid.presentation.school.CreateSchoolScreen
 import com.example.graphqlandroid.presentation.school.SchoolScreen
+import com.example.graphqlandroid.presentation.students.StudentsListScreen
 
 @Composable
 fun Navigation(navController: NavHostController){
@@ -45,6 +46,10 @@ fun Navigation(navController: NavHostController){
             val args = navBackStackEntry.toRoute<CampPage>()
 
             CampScreen(campId = args.id)
+        }
+
+        composable<StudentListPage> {
+            StudentsListScreen()
         }
 
     }
